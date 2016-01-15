@@ -1,0 +1,74 @@
+
+<!-- index.html -->
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="scotchTodo">
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+    <title>Node/Angular Todo App</title>
+
+    <!-- SCROLLS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css"><!-- load bootstrap -->
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <style>
+
+    </style>
+
+    <!-- SPELLS -->
+
+
+
+</head>
+<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+<body ng-controller="mainController">
+    <div class="container">
+
+        <!-- FORM TO CREATE TODOS -->
+        <div id="todo-form" class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <form id="testForm" action="api/search/simpleSearch" method="get">
+                    <div class="form-group">
+                        <span class="formLabel">Host: </span>
+                        <input type="text" class="form-control input-lg text-center host" placeholder="Host" name="host" ng-model="formData.text">
+                        <span class="formLabel">Gateway: </span>
+                        <input type="text" class="form-control input-lg text-center gateway" placeholder="Gateway" name="gateway" ng-model="formData.text">
+                        <span class="formLabel">Port: </span>
+                        <input type="text" class="form-control input-lg text-center port" placeholder="Port" name="port" ng-model="formData.text">
+                        <textarea type="text" form="testForm" class="form-control input-lg text-center dataJson" placeholder="testApp" name="data" ng-model="formData.text"></textarea>
+                    </div>
+
+                    <!-- createToDo() WILL CREATE NEW TODOS -->
+                    <button class="btn btn-primary btn-lg">Send</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        $("document").ready(function () {
+        $(".btn-lg").click(function () {
+            $('#testForm').submit(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "api/search/simpleSearch",
+                    type: "GET",
+                    data: "host=x&gateway=y&port=z&data=",
+                    success: function (data) {
+                        $(".dataJson").html(JSON.stringify(JSON.parse(data),undefined,4));
+                    },
+                    error: function (jXHR, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                }); // AJAX Get Jquery statment
+            });
+        }); // Click effect     
+    });
+    </script>
+</body>
+</html>
